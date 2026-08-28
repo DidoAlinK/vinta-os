@@ -116,7 +116,8 @@ export default function App() {
       name: profileData.name,
       role: profileData.role,
       phone: profileData.phone,
-      avatarColors: ['var(--gold)', 'var(--emerald)'],
+      picture: profileData.picture, // { type: 'preset', colors } | { type: 'upload', dataUrl }
+      avatarColors: profileData.picture?.colors || ['var(--gold)', 'var(--emerald)'],
       pin: profileData.pin,
     };
     setProfiles(prev => [...prev, newProfile]);
@@ -169,6 +170,7 @@ export default function App() {
           isOpen={showCreateProfile}
           onClose={() => setShowCreateProfile(false)}
           onSubmit={handleCreateProfile}
+          lockedRole={profiles.length === 0 ? 'owner' : undefined}
         />
       </ThemeProvider>
     );
