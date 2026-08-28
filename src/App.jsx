@@ -138,6 +138,10 @@ export default function App() {
 
   /* ── Navigation handler ──────────────────────────────────────── */
 
+  function handleNavChange(navId) {
+    setActiveNav(navId);
+  }
+
   function handleNavigate(navId) {
     if (navId === 'settings') {
       setSettingsOpen(true);
@@ -199,26 +203,27 @@ export default function App() {
   // Main dashboard shell
   return (
     <ThemeProvider>
-      <div className="vinta-app" style={{ display: 'flex', height: '100%', padding: '16px', gap: '14px' }}>
+      <div className="vinta-app" style={{ display: 'flex', height: '100%', padding: '16px', paddingLeft: '256px', gap: '14px', overflow: 'hidden' }}>
         <Sidebar
-          active={activeNav}
-          onNavigate={handleNavigate}
-          onLogout={handleLogout}
-          academyName={/* academy?.name */ 'Academy'}
+          activeNav={activeNav}
+          onNavChange={handleNavChange}
+          onSettingsClick={() => setSettingsOpen(true)}
+          userRole={currentUser?.role === 'owner' ? 'admin' : 'staff'}
         />
 
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minWidth: 0 }}>
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minWidth: 0, overflow: 'hidden' }}>
           <TopHeader
+            activeTab={activeNav}
             query={query}
-            setQuery={setQuery}
+            onQueryChange={setQuery}
             entityFilter={entityFilter}
-            setEntityFilter={setEntityFilter}
+            onEntityFilterChange={setEntityFilter}
             statusFilter={statusFilter}
-            setStatusFilter={setStatusFilter}
-            user={currentUser}
+            onStatusFilterChange={setStatusFilter}
+            user={currentUser || { name: '', role: '', avatarColors: null }}
           />
 
-          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minHeight: 0, overflow: 'auto' }}>
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minHeight: 0, overflow: 'hidden' }}>
             {activeNav === 'dashboard' && (
               <DashboardView
                 pushToast={pushToast}
@@ -250,9 +255,10 @@ export default function App() {
         </div>
 
         <SettingsFlyout
-          open={settingsOpen}
+          isOpen={settingsOpen}
           onClose={() => setSettingsOpen(false)}
           user={currentUser}
+          isOwner={currentUser?.role === 'owner'}
         />
 
         <ToastStack

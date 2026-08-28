@@ -316,3 +316,11 @@ button { font-family: 'Inter', sans-serif; }
   animation-duration: 0.5s;
   animation-timing-function: cubic-bezier(0.4,0,0.2,1);
 }
+
+/* ── Responsive: remove sidebar margin on mobile ────────────────────── */
+
+@media (max-width: 899px) {
+  .vinta-app {
+    padding-left: 16px !important;
+  }
+}
