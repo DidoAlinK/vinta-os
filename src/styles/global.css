@@ -65,6 +65,18 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
+
+/* ── Shared CSS custom properties ───────────────────────────────────── */
+
+:root {
+  --radius-xl: 28px;
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --radius-xs: 9px;
+  --border: var(--divider);
+  --card: var(--glass);
+}
 body {
   font-family: 'Inter', sans-serif;
   background: var(--bg-grad);

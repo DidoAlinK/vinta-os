@@ -220,7 +220,7 @@ export default function SettingsFlyout({
 
   return (
     <>
-      <div className="overlay" onClick={onClose}>
+      <div className={`overlay ${isOpen ? 'show' : ''}`} onClick={onClose}>
         <div className="settings-flyout glass" onClick={e => e.stopPropagation()}>
           <div className="settings-rail">
             <div className="rail-header">
