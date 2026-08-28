@@ -72,14 +72,6 @@ const ICONS = {
 
 const STAFF_HIDDEN = ['billing', 'settings'];
 
-/* ── Role badge config ────────────────────────────────────────────────── */
-
-const ROLE_COLORS = {
-  admin: { bg: 'var(--goldSoft)', color: 'var(--gold)', label: 'Admin' },
-  teacher: { bg: 'var(--emeraldSoft)', color: 'var(--emerald)', label: 'Teacher' },
-  staff: { bg: 'var(--violetSoft)', color: 'var(--violet)', label: 'Staff' },
-};
-
 /* ── Sidebar component ────────────────────────────────────────────────── */
 
 export default function Sidebar({
@@ -109,32 +101,17 @@ export default function Sidebar({
     (item) => !(isStaff && STAFF_HIDDEN.includes(item.id))
   );
 
-  const mainItems = filteredItems.filter((i) => i.id !== 'settings');
-  const hasSettings = filteredItems.some((i) => i.id === 'settings');
-  const roleMeta = ROLE_COLORS[userRole] || ROLE_COLORS.admin;
+  const mainItems = filteredItems;
 
   const sidebar = (
     <div className="sb-inner" data-theme={theme}>
       {/* Logo */}
       <div className="sb-logo">
-        <div className="sb-logo-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-            <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5" />
-            <circle cx="12" cy="12" r="3" />
-          </svg>
-        </div>
+        <div className="sb-logo-icon" />
         <div className="sb-logo-text">
-          <span className="sb-academy">Vinta</span>
-          <span className="sb-subtitle">School OS</span>
+          <span className="sb-academy">Vinta School OS</span>
+          <span className="sb-subtitle">École Al Amal</span>
         </div>
-      </div>
-
-      {/* Role badge */}
-      <div
-        className="sb-role"
-        style={{ background: roleMeta.bg, color: roleMeta.color }}
-      >
-        {roleMeta.label}
       </div>
 
       {/* Nav links */}
@@ -157,14 +134,6 @@ export default function Sidebar({
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />
-
-      {/* Settings at bottom */}
-      {hasSettings && (
-        <button className="sb-link sb-settings" onClick={() => handleNav('settings')}>
-          <span className="sb-icon">{ICONS.settings}</span>
-          <span className="sb-label">Settings</span>
-        </button>
-      )}
     </div>
   );
 
@@ -306,83 +275,61 @@ export default function Sidebar({
         /* ── Logo area ── */
         .sb-logo {
           display: flex; align-items: center; gap: 10px;
-          padding: 0 8px 16px;
-          border-bottom: 1px solid var(--divider);
-          margin-bottom: 8px;
+          padding: 6px 8px 18px;
         }
         .sb-logo-icon {
-          width: 34px; height: 34px; flex-shrink: 0;
-          display: flex; align-items: center; justify-content: center;
-          border-radius: ${RADIUS.sm};
-          background: linear-gradient(135deg, var(--gold), var(--emerald));
-          color: #fff;
-          padding: 5px;
-          box-shadow: 0 4px 14px rgba(179,135,42,0.30);
+          width: 32px; height: 32px; flex-shrink: 0;
+          border-radius: 11px;
+          background: linear-gradient(150deg, var(--gold), var(--emerald));
+          box-shadow: 0 6px 14px rgba(0,0,0,.18), 0 1px 0 rgba(255,255,255,.3) inset;
         }
-        .sb-logo-icon svg { width: 20px; height: 20px; }
         .sb-logo-text {
           display: flex; flex-direction: column; line-height: 1.1;
           overflow: hidden;
         }
         .sb-academy {
           font-family: ${FONT.heading};
-          font-size: 15px; font-weight: 700;
+          font-size: 14.5px; font-weight: 600;
           color: var(--text);
-          letter-spacing: -0.01em;
         }
         .sb-subtitle {
           font-family: ${FONT.body};
-          font-size: 10.5px; font-weight: 500;
+          font-size: 11px; font-weight: 500;
           color: var(--muted);
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-        }
-
-        /* ── Role badge ── */
-        .sb-role {
-          display: inline-flex;
-          align-self: flex-start;
-          margin: 10px 8px 6px;
-          padding: 3px 10px;
-          border-radius: 100px;
-          font-family: ${FONT.body};
-          font-size: 10.5px; font-weight: 600;
-          letter-spacing: 0.04em;
-          text-transform: uppercase;
         }
 
         /* ── Nav links ── */
         .sb-nav {
-          display: flex; flex-direction: column; gap: 2px;
+          display: flex; flex-direction: column; gap: 6px;
           padding: 6px 0;
           flex: 1;
         }
         .sb-link {
-          display: flex; align-items: center; gap: 10px;
+          display: flex; align-items: center; gap: 12px;
           width: 100%;
-          padding: 9px 12px;
+          padding: 11px 12px;
           border: none; outline: none;
-          border-radius: ${RADIUS.sm};
+          border-radius: ${RADIUS.md};
           background: transparent;
           color: var(--muted);
           font-family: ${FONT.body};
           font-size: 13.5px; font-weight: 500;
           cursor: pointer;
-          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          transition: all 0.18s;
           position: relative;
         }
         .sb-link:hover {
-          background: ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(35,36,31,0.05)'};
+          background: rgba(127,127,127,0.08);
           color: var(--text);
         }
         .sb-link.active {
-          background: var(--gold);
-          color: #fff;
+          background: var(--goldSoft);
+          color: var(--text);
           font-weight: 600;
-          box-shadow: 0 4px 16px rgba(179,135,42,0.30);
+          box-shadow: inset 0 0 0 1px var(--glassBorder);
         }
         .sb-link.active:hover {
-          background: var(--gold);
+          background: var(--goldSoft);
         }
         .sb-icon {
           width: 20px; height: 20px; flex-shrink: 0;
@@ -395,17 +342,6 @@ export default function Sidebar({
           text-overflow: ellipsis;
         }
 
-        /* ── Settings at bottom ── */
-        .sb-settings {
-          margin-top: 4px;
-          border-top: 1px solid var(--divider);
-          border-radius: 0;
-          padding-top: 12px;
-          padding-left: 12px;
-        }
-        .sb-settings:hover {
-          color: var(--gold);
-        }
       `}</style>
     </>
   );
