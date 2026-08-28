@@ -6,6 +6,7 @@ import AuthScreen from './components/auth/AuthScreen';
 import ProfilePicker from './components/auth/ProfilePicker';
 import PinModal from './components/auth/PinModal';
 import SuccessScreen from './components/auth/SuccessScreen';
+import CreateProfileModal from './components/auth/CreateProfileModal';
 
 import Sidebar from './components/layout/Sidebar';
 import TopHeader from './components/layout/TopHeader';
@@ -35,8 +36,9 @@ export default function App() {
   const [authScene, setAuthScene] = useState('auth'); // 'auth' | 'profiles' | 'success'
   const [currentUser, setCurrentUser] = useState(null); // { id, name, role, ... }
   const [pendingProfile, setPendingProfile] = useState(null);
-  const [profiles] = useState([]); // fetched from API
+  const [profiles, setProfiles] = useState([]); // fetched from API
   const [showPinModal, setShowPinModal] = useState(false);
+  const [showCreateProfile, setShowCreateProfile] = useState(false);
 
   /* ── Navigation ──────────────────────────────────────────────── */
   const [activeNav, setActiveNav] = useState('dashboard');
@@ -108,6 +110,27 @@ export default function App() {
     setActiveNav('dashboard');
   }
 
+  function handleCreateProfile(profileData) {
+    const newProfile = {
+      id: `p${Date.now()}`,
+      name: profileData.name,
+      role: profileData.role,
+      phone: profileData.phone,
+      avatarColors: ['var(--gold)', 'var(--emerald)'],
+      pin: profileData.pin,
+    };
+    setProfiles(prev => [...prev, newProfile]);
+    // Owner goes straight to dashboard; staff needs PIN
+    if (newProfile.role === 'owner') {
+      setCurrentUser(newProfile);
+      setAuthScene('success');
+    } else {
+      setPendingProfile(newProfile);
+      setShowPinModal(true);
+    }
+    setShowCreateProfile(false);
+  }
+
   function handleEnterDashboard() {
     setAuthScene('dashboard');
   }
@@ -137,9 +160,15 @@ export default function App() {
     return (
       <ThemeProvider>
         <ProfilePicker
-          profiles={/* profiles — fetched from API */[]}
+          profiles={profiles}
           onSelect={handleSelectProfile}
+          onCreateProfile={() => setShowCreateProfile(true)}
           onLogout={() => setAuthScene('auth')}
+        />
+        <CreateProfileModal
+          isOpen={showCreateProfile}
+          onClose={() => setShowCreateProfile(false)}
+          onSubmit={handleCreateProfile}
         />
       </ThemeProvider>
     );
