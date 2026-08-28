@@ -1,0 +1,318 @@
+/*
+ * Vinta School OS — Global Styles
+ * Applied once at the root. Component-level styles live alongside their components.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── Theme CSS custom properties ────────────────────────────────────── */
+
+[data-theme='light'] {
+  --bg: #efece4;
+  --bg-grad: radial-gradient(1100px 550px at 15% -10%, rgba(255,255,255,0.9), transparent 60%),
+             radial-gradient(900px 500px at 100% 0%, rgba(201,162,39,0.10), transparent 55%),
+             linear-gradient(180deg, #f4f1ea, #e9e5db);
+  --glass: rgba(255,255,255,0.55);
+  --glass-strong: rgba(255,255,255,0.82);
+  --glass-border: rgba(255,255,255,0.75);
+  --glass-shadow: 0 1px 0 rgba(255,255,255,0.9) inset, 0 18px 40px rgba(120,105,80,0.16);
+  --sheen: linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.12) 30%, rgba(255,255,255,0) 55%);
+  --text: #23241f;
+  --muted: #75726a;
+  --gold: #b3872a;
+  --emerald: #0f6b4d;
+  --violet: #7a5a95;
+  --gold-soft: rgba(179,135,42,0.14);
+  --emerald-soft: rgba(15,107,77,0.13);
+  --violet-soft: rgba(122,90,149,0.14);
+  --red: #b3423a;
+  --red-soft: rgba(179,66,58,0.13);
+  --divider: rgba(35,36,31,0.09);
+  --input-bg: rgba(255,255,255,0.6);
+  --slot-hover: rgba(179,135,42,0.10);
+  --danger-hover: rgba(179,66,58,0.12);
+  --slot-bg: rgba(35,36,31,0.035);
+}
+
+[data-theme='dark'] {
+  --bg: #1a1a1c;
+  --bg-grad: radial-gradient(1100px 550px at 15% -10%, rgba(255,255,255,0.05), transparent 60%),
+             radial-gradient(900px 500px at 100% 10%, rgba(31,174,124,0.07), transparent 55%),
+             linear-gradient(180deg, #1d1d20, #131315);
+  --glass: rgba(255,255,255,0.055);
+  --glass-strong: rgba(255,255,255,0.10);
+  --glass-border: rgba(255,255,255,0.10);
+  --glass-shadow: 0 1px 0 rgba(255,255,255,0.08) inset, 0 20px 50px rgba(0,0,0,0.55);
+  --sheen: linear-gradient(115deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 55%);
+  --text: #eceef0;
+  --muted: #9497a1;
+  --gold: #e0b93f;
+  --emerald: #1fae7c;
+  --violet: #a07cc5;
+  --gold-soft: rgba(224,185,63,0.15);
+  --emerald-soft: rgba(31,174,124,0.15);
+  --violet-soft: rgba(160,124,197,0.15);
+  --red: #e07a6f;
+  --red-soft: rgba(224,122,111,0.15);
+  --divider: rgba(255,255,255,0.08);
+  --input-bg: rgba(255,255,255,0.05);
+  --slot-hover: rgba(224,185,63,0.10);
+  --danger-hover: rgba(224,122,111,0.12);
+  --slot-bg: rgba(255,255,255,0.03);
+}
+
+/* ── Reset & base ───────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg-grad);
+  background-color: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
+  overflow: hidden;
+}
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
+h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; margin: 0; }
+button { font-family: 'Inter', sans-serif; }
+
+/* ── Glass utility ──────────────────────────────────────────────────── */
+
+.glass {
+  position: relative;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg, 22px);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(22px) saturate(180%);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+}
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--sheen);
+  pointer-events: none;
+}
+.glass > * { position: relative; z-index: 1; }
+
+/* ── Icon button utility ────────────────────────────────────────────── */
+
+.icon-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--r-sm, 12px);
+  border: 1px solid var(--glass-border);
+  background: var(--glass);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--muted); transition: 0.15s; flex-shrink: 0;
+}
+.icon-btn:hover {
+  color: var(--text); background: var(--glass-strong);
+  transform: translateY(-1px);
+}
+.icon-btn.danger:hover { color: var(--red); background: var(--danger-hover); }
+.icon-btn svg { width: 16px; height: 16px; }
+
+/* ── Badges ─────────────────────────────────────────────────────────── */
+
+.badge {
+  font-size: 11px; font-weight: 500;
+  padding: 4px 10px; border-radius: 100px;
+  flex-shrink: 0; white-space: nowrap;
+}
+.badge.paid { color: var(--emerald); background: var(--emerald-soft); }
+.badge.due { color: var(--gold); background: var(--gold-soft); }
+.badge.overdue { color: var(--red); background: var(--red-soft); }
+.badge.hourly { color: var(--gold); background: var(--gold-soft); }
+.badge.per-student { color: var(--emerald); background: var(--emerald-soft); }
+
+/* ── Form elements ──────────────────────────────────────────────────── */
+
+.field-label {
+  font-size: 10.5px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.06em;
+  margin-bottom: 5px; display: block;
+}
+.field-input, .field-value {
+  width: 100%;
+  background: var(--input-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-sm, 12px);
+  padding: 10px 12px;
+  color: var(--text);
+  font-family: 'Inter';
+  font-size: 13px;
+  outline: none;
+}
+.field-input:focus, .field-value:focus {
+  box-shadow: 0 0 0 2px var(--gold-soft);
+}
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.field-group { margin-bottom: 14px; }
+
+/* ── Buttons ────────────────────────────────────────────────────────── */
+
+.confirm-btn {
+  width: 100%;
+  margin-top: 18px;
+  background: linear-gradient(150deg, var(--gold), var(--emerald));
+  color: #fff; border: none;
+  border-radius: var(--r-md, 16px);
+  padding: 12px; font-weight: 600;
+  font-size: 13.5px; cursor: pointer;
+}
+.save-btn {
+  background: linear-gradient(150deg, var(--gold), var(--emerald));
+  color: #fff; border: none;
+  border-radius: var(--r-sm, 12px);
+  padding: 10px 18px; font-weight: 600;
+  font-size: 12.5px; cursor: pointer; transition: 0.15s;
+}
+.save-btn:hover { transform: translateY(-1px); }
+.ghost-btn {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--text);
+  border-radius: var(--r-sm, 12px);
+  padding: 10px 16px; font-weight: 600;
+  font-size: 12.5px; cursor: pointer; transition: 0.15s;
+}
+.ghost-btn:hover { background: var(--glass-strong); }
+.danger-btn {
+  background: transparent;
+  border: 1px solid var(--red-soft);
+  color: var(--red);
+  border-radius: var(--r-sm, 12px);
+  padding: 10px 16px; font-weight: 600;
+  font-size: 12.5px; cursor: pointer; transition: 0.15s;
+}
+.danger-btn:hover { background: var(--red-soft); }
+.delete-btn {
+  width: 100%; margin-top: 10px;
+  background: transparent; color: var(--red);
+  border: 1px solid var(--red-soft);
+  border-radius: var(--r-md, 16px);
+  padding: 12px; font-weight: 600;
+  font-size: 13px; cursor: pointer;
+}
+
+/* ── Overlay / Modal ────────────────────────────────────────────────── */
+
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,10,10,0.4);
+  backdrop-filter: blur(6px);
+  display: none; align-items: center; justify-content: center;
+  z-index: 60; padding: 20px;
+}
+.overlay.show { display: flex; }
+.modal {
+  width: 100%; max-width: 420px;
+  padding: 24px; position: relative;
+}
+.modal-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 16px; position: relative; z-index: 1;
+}
+.modal-title {
+  font-family: 'Space Grotesk';
+  font-weight: 600; font-size: 16px;
+}
+
+/* ── Toggle switch ──────────────────────────────────────────────────── */
+
+.switch {
+  width: 42px; height: 24px;
+  border-radius: 100px;
+  background: var(--input-bg);
+  border: 1px solid var(--glass-border);
+  position: relative; cursor: pointer;
+  flex-shrink: 0; transition: 0.2s;
+}
+.switch .knob {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--muted);
+  position: absolute; top: 2px; left: 2px;
+  transition: 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+.switch.on {
+  background: linear-gradient(150deg, var(--gold), var(--emerald));
+  border-color: transparent;
+}
+.switch.on .knob { left: 20px; background: #fff; }
+
+/* ── Segment control ────────────────────────────────────────────────── */
+
+.seg {
+  display: flex; gap: 3px; padding: 3px;
+  background: var(--input-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 100px;
+}
+.seg button {
+  border: none; background: transparent;
+  color: var(--muted); font-size: 12px; font-weight: 600;
+  padding: 7px 14px; border-radius: 100px;
+  cursor: pointer; transition: 0.15s;
+  display: flex; align-items: center; gap: 6px;
+}
+.seg button.active {
+  background: linear-gradient(150deg, var(--gold), var(--emerald));
+  color: #fff;
+}
+.seg button svg { width: 13px; height: 13px; }
+
+/* ── FAB ────────────────────────────────────────────────────────────── */
+
+.fab {
+  position: absolute; right: 22px; bottom: 22px;
+  width: 56px; height: 56px;
+  border-radius: var(--r-lg, 22px);
+  background: linear-gradient(150deg, var(--gold), var(--emerald));
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  box-shadow: 0 10px 26px rgba(0,0,0,0.22), 0 1px 0 rgba(255,255,255,0.3) inset;
+  transition: 0.18s; z-index: 2;
+}
+.fab:hover { transform: translateY(-2px) scale(1.03); }
+.fab svg { width: 22px; height: 22px; }
+
+/* ── Placeholder ────────────────────────────────────────────────────── */
+
+.placeholder-panel {
+  flex: 1; display: flex;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 8px; padding: 40px;
+}
+.placeholder-panel svg { width: 34px; height: 34px; color: var(--muted); opacity: 0.6; }
+.placeholder-panel .pt { font-family: 'Space Grotesk'; font-size: 15px; font-weight: 600; }
+.placeholder-panel .ps { font-size: 12.5px; color: var(--muted); }
+
+/* ── Animations ─────────────────────────────────────────────────────── */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.flash { animation: flashHighlight 1.4s ease; }
+@keyframes flashHighlight {
+  0% { background: var(--gold-soft); }
+  100% { background: transparent; }
+}
+
+/* ── View transitions ───────────────────────────────────────────────── */
+
+::view-transition-old(.avatar-morph),
+::view-transition-new(.avatar-morph) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.4,0,0.2,1);
+}
