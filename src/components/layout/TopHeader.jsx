@@ -1,7 +1,7 @@
 import React from 'react';
 import { RADIUS, FONT } from '../../styles/design-tokens';
 import { useTheme } from '../../styles/ThemeContext';
-import ThemeToggle from '../shared/ThemeToggle';
+import ThemeToggle from '../../styles/ThemeToggle';
 
 /* ── SVG icon helpers ─────────────────────────────────────────────────── */
 
