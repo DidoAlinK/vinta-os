@@ -48,6 +48,12 @@ export default function App() {
 
   /* ── Settings flyout ─────────────────────────────────────────── */
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settingsSection, setSettingsSection] = useState('appearance');
+
+  /* ── Entity state (students, teachers, sessions) ─────────────── */
+  const [students, setStudents] = useState([]);
+  const [teachers, setTeachers] = useState([]);
+  const [sessions, setSessions] = useState([]);
 
   /* ── Toasts ──────────────────────────────────────────────────── */
   const [toasts, setToasts] = useState([]);
@@ -150,6 +156,67 @@ export default function App() {
     }
   }
 
+  /* ── Entity handlers ─────────────────────────────────────────── */
+  function handleAddStudent(data) {
+    const newStudent = {
+      id: `s${Date.now()}`,
+      name: data.firstName || data.name || '',
+      last: data.lastName || '',
+      phone: data.phone || '',
+      email: data.email || '',
+      cls: data.grade || data.classroom || '',
+      dateOfBirth: data.dateOfBirth || '',
+      parentName: data.parentName || '',
+      parentPhone: data.parentPhone || '',
+      parentEmail: data.parentEmail || '',
+      address: data.address || '',
+      notes: data.notes || '',
+      status: 'paid',
+      avatarColors: data.avatarColors || ['#b3872a', '#0f6b4d'],
+      initials: data.initials || '?',
+    };
+    setStudents(prev => [...prev, newStudent]);
+  }
+
+  function handleAddTeacher(data) {
+    const newTeacher = {
+      id: `t${Date.now()}`,
+      name: data.name || '',
+      last: data.last || '',
+      phone: data.phone || '',
+      subject: data.subject || '',
+      classes: data.classes || '',
+      contract: data.contract || 'hourly',
+      rate: data.rate || 0,
+      schedule: [],
+    };
+    setTeachers(prev => [...prev, newTeacher]);
+  }
+
+  function handleAddSession(data) {
+    const newSession = {
+      id: `sess${Date.now()}`,
+      subject: data.subject || '',
+      date: data.date || new Date().toISOString().slice(0, 10),
+      startTime: data.startTime || '09:00',
+      endTime: data.endTime || '10:00',
+      teacher: data.teacher ? { name: data.teacher } : null,
+      room: data.room || '',
+      status: 'scheduled',
+      enrolledCount: 0,
+      totalCount: 0,
+    };
+    setSessions(prev => [...prev, newSession]);
+  }
+
+  function handleMoveSession(id, date, startTime) {
+    setSessions(prev => prev.map(s => s.id === id ? { ...s, date, startTime } : s));
+  }
+
+  function handleResizeSession(id, startTime, endTime) {
+    setSessions(prev => prev.map(s => s.id === id ? { ...s, startTime, endTime } : s));
+  }
+
   /* ── Render ──────────────────────────────────────────────────── */
 
   // Auth flow
@@ -227,21 +294,28 @@ export default function App() {
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minHeight: 0, overflow: 'hidden' }}>
             {activeNav === 'dashboard' && (
               <DashboardView
+                sessions={sessions}
+                students={students}
                 pushToast={pushToast}
                 onNavigate={handleNavigate}
               />
             )}
             {activeNav === 'students' && (
-              <StudentsView />
+              <StudentsView students={students} onAddStudent={handleAddStudent} />
             )}
             {activeNav === 'teachers' && (
-              <TeachersView />
+              <TeachersView teachers={teachers} onAddTeacher={handleAddTeacher} />
             )}
             {activeNav === 'classes' && (
               <ClassesView />
             )}
             {activeNav === 'calendar' && (
-              <CalendarView />
+              <CalendarView
+                sessions={sessions}
+                onAddSession={handleAddSession}
+                onMoveSession={handleMoveSession}
+                onResizeSession={handleResizeSession}
+              />
             )}
             {activeNav === 'billing' && (
               <BillingView />
@@ -257,7 +331,9 @@ export default function App() {
 
         <SettingsFlyout
           isOpen={settingsOpen}
-          onClose={() => setSettingsOpen(false)}
+          onClose={() => { setSettingsOpen(false); setSettingsSection('appearance'); }}
+          activeSection={settingsSection}
+          onSectionChange={setSettingsSection}
           user={currentUser}
           isOwner={currentUser?.role === 'owner'}
         />

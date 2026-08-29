@@ -18,7 +18,7 @@ const FILTERS = [
  *     { id, name, last, phone, subject, classes, contract: 'hourly'|'per-student',
  *       rate, schedule: [...] }
  */
-export default function TeachersView({ teachers = [] }) {
+export default function TeachersView({ teachers = [], onAddTeacher }) {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
   const [drawerTeacher, setDrawerTeacher] = useState(null);
@@ -66,8 +66,8 @@ export default function TeachersView({ teachers = [] }) {
   }
 
   function handleAdd(data) {
+    onAddTeacher?.(data);
     setShowAdd(false);
-    /* parent wiring via callback — placeholder */
   }
 
   return (
@@ -180,12 +180,11 @@ export default function TeachersView({ teachers = [] }) {
       </button>
 
       {/* ── Modals & drawers ────────────────────────────────────── */}
-      {showAdd && (
-        <AddTeacherModal
-          onClose={() => setShowAdd(false)}
-          onAdd={handleAdd}
-        />
-      )}
+      <AddTeacherModal
+        isOpen={showAdd}
+        onClose={() => setShowAdd(false)}
+        onAdd={handleAdd}
+      />
       {drawerTeacher && (
         <TeacherDrawer
           teacher={drawerTeacher}

@@ -1,6 +1,6 @@
 import React, { useMemo, useCallback, useState } from 'react';
 import { useTheme } from '../../styles/ThemeContext';
-import { DAYS, CAL_START_HOUR, CAL_END_HOUR, HOUR_PX, RADIUS, FONT, SUBJECT_STYLE } from '../../styles/design-tokens';
+import { DAYS, CAL_START_HOUR, CAL_END_HOUR, HOUR_PX, RADIUS, FONT } from '../../styles/design-tokens';
 
 /**
  * AgendaBoard — Read-only weekly block grid for the Dashboard.
@@ -95,11 +95,26 @@ export default function AgendaBoard({ sessions = [], onSessionClick, currentWeek
     todayBg: dark ? 'rgba(31,174,124,0.06)' : 'rgba(15,107,77,0.04)',
   };
 
+  /* Dynamic subject color palette */
+  const SUBJECT_PALETTE = ['gold', 'emerald', 'violet', 'red'];
+  const colorMap = { gold: { bg: t.goldSoft, accent: t.gold, text: t.gold }, emerald: { bg: t.emeraldSoft, accent: t.emerald, text: t.emerald }, violet: { bg: t.violetSoft, accent: t.violet, text: t.violet }, red: { bg: t.redSoft, accent: t.red, text: t.red } };
+  const subjectColorMap = useMemo(() => {
+    const map = {};
+    let idx = 0;
+    sessions.forEach(s => {
+      if (s.subject && !map[s.subject]) {
+        map[s.subject] = colorMap[SUBJECT_PALETTE[idx % SUBJECT_PALETTE.length]] || colorMap.gold;
+        idx++;
+      }
+    });
+    return map;
+  }, [sessions]);
+
   function subjectColor(subject) {
-    const map = { gold: { bg: t.goldSoft, accent: t.gold, text: t.gold }, emerald: { bg: t.emeraldSoft, accent: t.emerald, text: t.emerald }, violet: { bg: t.violetSoft, accent: t.violet, text: t.violet }, red: { bg: t.redSoft, accent: t.red, text: t.red } };
-    const key = SUBJECT_STYLE[subject]?.key || 'gold';
-    return map[key] || map.gold;
+    return subjectColorMap[subject] || colorMap.gold;
   }
+
+  const legendSubjects = useMemo(() => Object.keys(subjectColorMap), [subjectColorMap]);
 
   function statusAppearance(status) {
     const c = STATUS_COLORS[status] || 'gold';
@@ -127,9 +142,9 @@ export default function AgendaBoard({ sessions = [], onSessionClick, currentWeek
             </div>
             {/* Subject legend */}
             <div className="ab-legend">
-              {Object.entries(SUBJECT_STYLE).map(([subj, s]) => (
+              {legendSubjects.map((subj) => (
                 <span key={subj} className="ab-legend-item">
-                  <span className="ab-legend-dot" style={{ background: t[s.key || 'gold'] }} />
+                  <span className="ab-legend-dot" style={{ background: subjectColorMap[subj]?.accent }} />
                   {subj}
                 </span>
               ))}

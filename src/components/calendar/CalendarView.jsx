@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { useTheme } from '../../styles/ThemeContext';
-import { DAYS, CAL_START_HOUR, CAL_END_HOUR, HOUR_PX, RADIUS, FONT, SUBJECT_STYLE } from '../../styles/design-tokens';
+import { DAYS, CAL_START_HOUR, CAL_END_HOUR, HOUR_PX, RADIUS, FONT } from '../../styles/design-tokens';
 import CreateSessionModal from './CreateSessionModal';
 import AddSubjectModal from './AddSubjectModal';
 
@@ -40,13 +40,8 @@ function yToMinutes(y) { return Math.round(((y / HOUR_PX) * 60 + CAL_START_HOUR 
 
 const STATUS_COLORS = { scheduled: 'gold', in_progress: 'emerald', completed: 'grey', cancelled: 'red' };
 
-/* ── Default subjects (will be merged with user-added ones) ──────── */
-const DEFAULT_SUBJECTS = [
-  { id: 'math', name: 'Math', color: '#b3872a' },
-  { id: 'french', name: 'French', color: '#7c3aed' },
-  { id: 'english', name: 'English', color: '#0ea5e9' },
-  { id: 'science', name: 'Science', color: '#0f6b4d' },
-];
+/* ── Default subjects (empty — user adds via color wheel) ──────── */
+const DEFAULT_SUBJECTS = [];
 
 export default function CalendarView({
   sessions = [],
@@ -579,7 +574,7 @@ function css(t, dark) {
 
     .cv-hours-col { width: 56px; flex-shrink: 0; }
     .cv-hour-slot { position: relative; border-bottom: 1px solid ${t.divider}; }
-    .cv-hour-label { position: absolute; top: -8px; left: 6px; right: 4px; font-family: ${FONT.heading}; font-size: 10px; font-weight: 600; color: ${t.muted}; white-space: nowrap; }
+    .cv-hour-label { position: absolute; top: 0; left: 6px; right: 4px; font-family: ${FONT.heading}; font-size: 10px; font-weight: 600; color: ${t.muted}; white-space: nowrap; }
 
     .cv-day-col { flex: 1; position: relative; border-left: 1px solid ${t.divider}; min-height: ${GRID_HEIGHT}px; transition: background 0.2s; }
     .cv-day-col--today { background: ${t.todayBg}; }

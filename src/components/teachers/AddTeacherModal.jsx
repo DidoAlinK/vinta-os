@@ -8,11 +8,13 @@ import { X, UserPlus } from 'lucide-react';
  *   onClose — () => void
  *   onAdd   — ({ name, last, phone, subject }) => void
  */
-export default function AddTeacherModal({ onClose, onAdd }) {
+export default function AddTeacherModal({ isOpen, onClose, onAdd }) {
   const [name, setName] = useState('');
   const [last, setLast] = useState('');
   const [phone, setPhone] = useState('');
   const [subject, setSubject] = useState('');
+
+  if (!isOpen) return null;
 
   function handleSubmit(e) {
     e.preventDefault();

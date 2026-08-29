@@ -111,7 +111,12 @@ export const AVATAR_PAIRS = [
 ];
 
 export function colorFor(id) {
-  return AVATAR_PAIRS[id % AVATAR_PAIRS.length];
+  let hash = 0;
+  const str = String(id);
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) - hash + str.charCodeAt(i)) | 0;
+  }
+  return AVATAR_PAIRS[Math.abs(hash) % AVATAR_PAIRS.length];
 }
 
 export function initialsOf(name, last) {
@@ -145,7 +150,7 @@ export const FULL_DAYS = [
 
 /* ── Calendar grid constants ────────────────────────────────────────── */
 
-export const CAL_START_HOUR = 8;
+export const CAL_START_HOUR = 7;
 export const CAL_END_HOUR = 21;
 export const HOUR_PX = 60;
 export const SNAP_MIN = 5;
