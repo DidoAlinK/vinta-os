@@ -247,8 +247,8 @@ function css(t, dark) {
     .sd-panel {
       border-radius: ${RADIUS.lg};
       background: ${t.glass};
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
       border: 1px solid ${t.glassBorder};
       box-shadow: ${dark
         ? '0 1px 0 rgba(255,255,255,0.08) inset, 0 20px 50px rgba(0,0,0,0.55)'

@@ -224,7 +224,9 @@ export default function AgendaBoard({ sessions = [], onSessionClick, currentWeek
 
 function css(t, dark) {
   return `
-    .ab-board { position: relative; border-radius: ${RADIUS.lg}; background: ${t.glass}; backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid ${t.glassBorder}; box-shadow: ${dark ? '0 1px 0 rgba(255,255,255,0.08) inset, 0 20px 50px rgba(0,0,0,0.55)' : '0 1px 0 rgba(255,255,255,0.9) inset, 0 18px 40px rgba(120,105,80,0.16)'}; overflow: hidden; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .ab-board { position: relative; border-radius: ${RADIUS.lg}; background: ${t.glass}; backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%); border: 1px solid ${t.glassBorder}; box-shadow: ${dark ? '0 1px 0 rgba(255,255,255,0.08) inset, 0 20px 50px rgba(0,0,0,0.55)' : '0 1px 0 rgba(255,255,255,0.9) inset, 0 18px 40px rgba(120,105,80,0.16)'}; overflow: hidden; display: flex; flex-direction: column; flex: 1; min-height: 0; }
+    .ab-board::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: ${dark ? 'linear-gradient(115deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 55%)' : 'linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.12) 30%, rgba(255,255,255,0) 55%)'}; pointer-events: none; }
+    .ab-board > * { position: relative; z-index: 1; }
 
     /* Header with title + legend + toggle */
     .ab-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px 12px; border-bottom: 1px solid ${t.divider}; gap: 16px; flex-wrap: wrap; flex-shrink: 0; }

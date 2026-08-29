@@ -518,7 +518,7 @@ function css(t, dark) {
 
     /* ── Sidebar ──────────────────────────────────────────────── */
     .cv-sidebar { width: 180px; flex-shrink: 0; display: flex; flex-direction: column; gap: 10px;
-      background: ${t.glass}; backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+      background: ${t.glass}; backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
       border: 1px solid ${t.glassBorder}; border-radius: ${RADIUS.lg};
       box-shadow: ${dark ? '0 1px 0 rgba(255,255,255,0.08) inset, 0 16px 40px rgba(0,0,0,0.5)' : '0 1px 0 rgba(255,255,255,0.9) inset, 0 16px 36px rgba(120,105,80,0.13)'};
       padding: 14px 10px; }
@@ -544,7 +544,7 @@ function css(t, dark) {
 
     /* ── Main ─────────────────────────────────────────────────── */
     .cv-main { flex: 1; display: flex; flex-direction: column; gap: 0; min-height: 0;
-      background: ${t.glass}; backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+      background: ${t.glass}; backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
       border: 1px solid ${t.glassBorder}; border-radius: ${RADIUS.lg};
       box-shadow: ${dark ? '0 1px 0 rgba(255,255,255,0.08) inset, 0 16px 40px rgba(0,0,0,0.5)' : '0 1px 0 rgba(255,255,255,0.9) inset, 0 16px 36px rgba(120,105,80,0.13)'};
       overflow: hidden; }

@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "vinta-dev",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "cd /d E:\\Vinta OS\\Vinta OS\\App && npx vite --host --port 5175"],
+      "port": 5175
+    }
+  ]
+}

@@ -150,7 +150,7 @@ export default function ProfilePicker({ profiles = [], onSelect, onCreateProfile
         .profile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 16px; width: 100%; margin-bottom: 28px; }
 
         /* Card */
-        .profile-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 16px 18px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: ${RADIUS.lg}; box-shadow: var(--glass-shadow); backdrop-filter: blur(40px) saturate(180%); -webkit-backdrop-filter: blur(40px) saturate(180%); cursor: pointer; transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; opacity: 0; transform: translateY(16px) scale(0.96); }
+        .profile-card { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 22px 16px 18px; background: var(--glass); border: 1px solid var(--glass-border); border-radius: ${RADIUS.lg}; box-shadow: var(--glass-shadow); backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%); cursor: pointer; transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; opacity: 0; transform: translateY(16px) scale(0.96); }
         .profile-card::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--sheen); pointer-events: none; }
         .profile-card > * { position: relative; z-index: 1; }
         .profile-card.visible { opacity: 1; transform: translateY(0) scale(1); }

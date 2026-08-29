@@ -41,24 +41,38 @@ export default function SettingsFlyout({
         return (
           <div className="settings-section">
             <h3>Appearance</h3>
-            <Field label="Theme">
-              <select className="field-input" defaultValue={academySettings.defaultTheme || 'light'}
-                      onChange={e => onUpdateAcademy?.({ defaultTheme: e.target.value })}>
-                <option value="light">Light</option><option value="dark">Dark</option>
-              </select>
-            </Field>
-            <Field label="Font Size">
-              <select className="field-input" defaultValue={academySettings.defaultFontSize || 'normal'}
-                      onChange={e => onUpdateAcademy?.({ defaultFontSize: e.target.value })}>
-                <option value="normal">Normal</option><option value="large">Large</option>
-              </select>
-            </Field>
-            <Field label="Language">
-              <select className="field-input" defaultValue={academySettings.defaultLanguage || 'fr'}
-                      onChange={e => onUpdateAcademy?.({ defaultLanguage: e.target.value })}>
-                <option value="fr">Français</option><option value="ar">العربية</option>
-              </select>
-            </Field>
+            <div className="set-card">
+              <div className="set-row">
+                <span className="field-label" style={{ margin: 0 }}>THEME</span>
+                <div className="seg">
+                  {['Light', 'Dark', 'System'].map(opt => (
+                    <button key={opt} className={((academySettings.defaultTheme || 'light') === opt.toLowerCase() ? 'active' : '')}
+                            onClick={() => onUpdateAcademy?.({ defaultTheme: opt.toLowerCase() })}>{opt}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="set-row">
+                <span className="field-label" style={{ margin: 0 }}>FONT SIZE</span>
+                <div className="seg">
+                  {['Small', 'Normal', 'Large'].map(opt => (
+                    <button key={opt} className={((academySettings.defaultFontSize || 'normal') === opt.toLowerCase() ? 'active' : '')}
+                            onClick={() => onUpdateAcademy?.({ defaultFontSize: opt.toLowerCase() })}>{opt}</button>
+                  ))}
+                </div>
+              </div>
+              <div className="set-row">
+                <span className="field-label" style={{ margin: 0 }}>LANGUAGE</span>
+                <div className="seg">
+                  {['English', 'Français', 'العربية'].map(opt => {
+                    const val = opt === 'English' ? 'en' : opt === 'Français' ? 'fr' : 'ar';
+                    return (
+                      <button key={opt} className={((academySettings.defaultLanguage || 'fr') === val ? 'active' : '')}
+                              onClick={() => onUpdateAcademy?.({ defaultLanguage: val })}>{opt}</button>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
         );
       case 'account':
@@ -297,7 +311,7 @@ export default function SettingsFlyout({
         /* ── Overlay ── */
         .set-overlay { position: fixed; inset: 0; z-index: 8000; display: none; align-items: center; justify-content: center; padding: 24px; }
         .set-overlay.show { display: flex; }
-        .set-dim { position: absolute; inset: 0; background: rgba(10,10,10,.35); opacity: 0; transition: opacity .35s ease; }
+        .set-dim { position: absolute; inset: 0; background: rgba(10,10,10,.35); opacity: 0; transition: opacity .35s ease; pointer-events: none; }
         .set-overlay.show .set-dim { opacity: 1; }
 
         /* ── Modal ── */
@@ -352,6 +366,7 @@ export default function SettingsFlyout({
         /* ── Cards & rows ── */
         .set-card { background: var(--glass); border: 1px solid var(--glass-border); border-radius: var(--r-md); padding: 4px 16px; }
         .set-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 14px 0; border-top: 1px solid var(--divider); }
+        .set-row:first-child { border-top: none; }
         .set-row:first-child { border-top: none; }
         .set-row-label { font-size: 13.5px; font-weight: 500; }
         .set-row-desc { font-size: 11.5px; color: var(--muted); margin-top: 2px; }

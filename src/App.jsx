@@ -203,15 +203,16 @@ export default function App() {
   // Main dashboard shell
   return (
     <ThemeProvider>
-      <div className="vinta-app" style={{ display: 'flex', height: '100%', padding: '16px', paddingLeft: '256px', gap: '14px', overflow: 'hidden' }}>
+      <div className="vinta-app shell" data-theme={currentUser?.theme || 'light'} style={{ height: '100vh', overflow: 'hidden' }}>
         <Sidebar
           activeNav={activeNav}
           onNavChange={handleNavChange}
           onSettingsClick={() => setSettingsOpen(true)}
+          onLogout={handleLogout}
           userRole={currentUser?.role === 'owner' ? 'admin' : 'staff'}
         />
 
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minWidth: 0, overflow: 'hidden' }}>
+        <div className="main" style={{ minHeight: 0, overflow: 'hidden' }}>
           <TopHeader
             activeTab={activeNav}
             query={query}

@@ -78,6 +78,7 @@ export default function Sidebar({
   activeNav,
   onNavChange,
   onSettingsClick,
+  onLogout,
   isStaff = false,
   userRole = 'admin',
 }) {
@@ -134,6 +135,30 @@ export default function Sidebar({
 
       {/* Spacer */}
       <div style={{ flex: 1 }} />
+
+      {/* Logout button */}
+      <button
+        onClick={onLogout}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 8,
+          width: '100%', padding: '8px 12px', marginTop: 4,
+          border: 'none', borderRadius: RADIUS.sm,
+          background: 'transparent',
+          color: isDark ? '#f87171' : '#dc2626',
+          fontSize: 12, fontWeight: 500,
+          fontFamily: FONT.body, cursor: 'pointer',
+          transition: '0.15s',
+        }}
+        onMouseEnter={e => e.currentTarget.style.background = isDark ? 'rgba(248,113,113,0.12)' : 'rgba(220,38,38,0.08)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+      >
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+        <span>Log out</span>
+      </button>
     </div>
   );
 
@@ -187,7 +212,7 @@ export default function Sidebar({
           width: 40px; height: 40px;
           border: none; border-radius: ${RADIUS.sm};
           background: ${isDark ? 'rgba(45,45,48,0.65)' : 'rgba(255,255,255,0.45)'};
-          backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
           color: var(--text);
           cursor: pointer; padding: 8px;
           box-shadow: ${isDark
@@ -211,21 +236,21 @@ export default function Sidebar({
 
         /* ── Desktop sidebar ── */
         .sb-desktop {
-          position: fixed; top: 0; left: 0; bottom: 0;
-          width: 240px; z-index: 1000;
-          padding: 16px 10px;
+          width: 222px; flex-shrink: 0;
           display: flex;
+          padding: 16px 0 16px 0;
         }
         .sb-desktop .sb-inner {
           width: 100%;
           display: flex; flex-direction: column;
-          border-radius: 0 ${RADIUS.lg} ${RADIUS.lg} 0;
-          padding: 20px 12px;
-          background: ${isDark ? 'rgba(35,35,38,0.60)' : 'rgba(255,255,255,0.45)'};
-          backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+          border-radius: ${RADIUS.lg};
+          padding: 16px 12px;
+          background: var(--glass);
+          backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
           border: 1px solid var(--glassBorder);
           box-shadow: var(--glassShadow);
           overflow: hidden;
+          position: relative;
         }
         .sb-desktop .sb-inner::before {
           content: '';
@@ -252,7 +277,7 @@ export default function Sidebar({
           border-radius: 0 ${RADIUS.lg} ${RADIUS.lg} 0;
           padding: 20px 12px;
           background: ${isDark ? 'rgba(35,35,38,0.85)' : 'rgba(255,255,255,0.72)'};
-          backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+          backdrop-filter: blur(22px) saturate(180%); -webkit-backdrop-filter: blur(22px) saturate(180%);
           border: 1px solid var(--glassBorder);
           box-shadow: var(--glassShadow);
           overflow: hidden;
@@ -300,22 +325,21 @@ export default function Sidebar({
 
         /* ── Nav links ── */
         .sb-nav {
-          display: flex; flex-direction: column; gap: 6px;
-          padding: 6px 0;
+          display: flex; flex-direction: column; gap: 4px;
           flex: 1;
         }
         .sb-link {
           display: flex; align-items: center; gap: 12px;
           width: 100%;
-          padding: 11px 12px;
+          padding: 10px 12px;
           border: none; outline: none;
           border-radius: ${RADIUS.md};
           background: transparent;
           color: var(--muted);
           font-family: ${FONT.body};
-          font-size: 13.5px; font-weight: 500;
+          font-size: 13px; font-weight: 500;
           cursor: pointer;
-          transition: all 0.18s;
+          transition: all 0.15s;
           position: relative;
         }
         .sb-link:hover {
@@ -332,10 +356,10 @@ export default function Sidebar({
           background: var(--goldSoft);
         }
         .sb-icon {
-          width: 20px; height: 20px; flex-shrink: 0;
+          width: 17px; height: 17px; flex-shrink: 0;
           display: flex; align-items: center; justify-content: center;
         }
-        .sb-icon svg { width: 18px; height: 18px; }
+        .sb-icon svg { width: 17px; height: 17px; }
         .sb-label {
           white-space: nowrap;
           overflow: hidden;

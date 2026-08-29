@@ -148,10 +148,11 @@ export default function ActivityLog({ logs = [], onLoadMore }) {
 function css(t, dark) {
   return `
     .al-panel {
+      position: relative;
       border-radius: ${RADIUS.lg};
       background: ${t.glass};
-      backdrop-filter: blur(40px);
-      -webkit-backdrop-filter: blur(40px);
+      backdrop-filter: blur(22px) saturate(180%);
+      -webkit-backdrop-filter: blur(22px) saturate(180%);
       border: 1px solid ${t.glassBorder};
       box-shadow: ${dark
         ? '0 1px 0 rgba(255,255,255,0.08) inset, 0 20px 50px rgba(0,0,0,0.55)'
@@ -162,6 +163,8 @@ function css(t, dark) {
       min-height: 0;
       flex: 1;
     }
+    .al-panel::before { content: ''; position: absolute; inset: 0; border-radius: inherit; background: ${dark ? 'linear-gradient(115deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.02) 30%, rgba(255,255,255,0) 55%)' : 'linear-gradient(115deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.12) 30%, rgba(255,255,255,0) 55%)'}; pointer-events: none; }
+    .al-panel > * { position: relative; z-index: 1; }
 
     /* Header */
     .al-header {

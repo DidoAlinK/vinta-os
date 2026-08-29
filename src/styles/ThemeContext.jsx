@@ -15,6 +15,12 @@ export function ThemeProvider({ children }) {
     }
   });
 
+  // Set data-theme on both <html> and <body> so CSS vars resolve everywhere
+  React.useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.body.setAttribute('data-theme', theme);
+  }, [theme]);
+
   const toggleTheme = useCallback(() => {
     setTheme((prev) => {
       const next = prev === 'light' ? 'dark' : 'light';

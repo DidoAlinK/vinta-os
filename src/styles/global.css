@@ -69,6 +69,11 @@ html, body, #root { height: 100%; margin: 0; }
 /* ── Shared CSS custom properties ───────────────────────────────────── */
 
 :root {
+  --r-xl: 28px;
+  --r-lg: 22px;
+  --r-md: 16px;
+  --r-sm: 12px;
+  --r-xs: 9px;
   --radius-xl: 28px;
   --radius-lg: 22px;
   --radius-md: 16px;
@@ -89,6 +94,25 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 10px; }
 h1, h2, h3 { font-family: 'Space Grotesk', sans-serif; margin: 0; }
 button { font-family: 'Inter', sans-serif; }
+
+/* ── Shell layout (matches mockup) ──────────────────────────────────── */
+
+.shell {
+  display: flex;
+  height: 100%;
+  padding: 16px;
+  gap: 14px;
+  overflow: hidden;
+}
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
 
 /* ── Glass utility ──────────────────────────────────────────────────── */
 
@@ -114,7 +138,7 @@ button { font-family: 'Inter', sans-serif; }
 /* ── Icon button utility ────────────────────────────────────────────── */
 
 .icon-btn {
-  width: 36px; height: 36px;
+  width: 34px; height: 34px;
   border-radius: var(--r-sm, 12px);
   border: 1px solid var(--glass-border);
   background: var(--glass);
